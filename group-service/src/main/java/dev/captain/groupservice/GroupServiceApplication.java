@@ -9,6 +9,7 @@ import dev.captain.groupservice.model.enums.GROUP_TYPE;
 import dev.captain.groupservice.repository.CommentRepo;
 import dev.captain.groupservice.repository.DiscussionRepo;
 import dev.captain.groupservice.service.GroupService;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,10 @@ import java.util.Random;
 public class GroupServiceApplication {
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.configure()
+                .filename(".env.dev")
+                .load();
+        System.setProperty("MONGO_URI", dotenv.get("MONGO_URI"));
         SpringApplication.run(GroupServiceApplication.class, args);
     }
 

@@ -10,7 +10,7 @@ public class S3Config {
 
     @Bean
     public Region region() {
-        return Region.EU_WEST_2; // replace with your desired region
+        return Region.EU_WEST_2;
     }
 
 }

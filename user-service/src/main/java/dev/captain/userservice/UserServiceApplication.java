@@ -1,5 +1,5 @@
 package dev.captain.userservice;
-
+import io.github.cdimascio.dotenv.Dotenv;
 import dev.captain.userservice.model.enums.*;
 import dev.captain.userservice.model.tables.*;
 import dev.captain.userservice.repo.*;
@@ -18,11 +18,19 @@ import java.util.*;
 
 @SpringBootApplication
 public class UserServiceApplication {
+        public static void main(String[] args) {
+            Dotenv dotenv = Dotenv.configure()
+                    .filename(".env.dev")
+                    .load();
 
-    public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
-    }
+            System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
+            System.setProperty("DATABASE_URL", dotenv.get("DATABASE_URL"));
+            System.setProperty("DATABASE_USER", dotenv.get("DATABASE_USER"));
+            System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
 
+
+            SpringApplication.run(UserServiceApplication.class, args);
+        }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
