@@ -19,7 +19,7 @@ public class S3Service {
     private final String region;
 
     public S3Service(@Value("${aws_access_key_id}") String accessKeyId,
-                     @Value("${aws_secret_access_key}") String secretKey,
+                     @Value("${aws_secret_access_key}")String secretKey,
                      @Value("${aws_region}") String region) {
 
         this.accessKeyId = accessKeyId;
