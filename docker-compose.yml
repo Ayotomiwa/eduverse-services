@@ -1,0 +1,130 @@
+---
+version: '3.7'
+services:
+
+  ## Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    expose:
+      - "9411"
+
+  rabbimq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+  ## Eureka Server
+  discovery-server:
+    image: discovery-server:new
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    expose:
+      - "8761"
+    depends_on:
+      - zipkin
+
+  api-gateway:
+    image: api-gateway:new
+    container_name: api-gateway
+    ports:
+      - "8222:8222"
+    expose:
+      - "8222"
+    depends_on:
+      - zipkin
+      - discovery-server
+
+
+
+
+  group-service:
+    container_name: group-service
+    image: group-service:new
+    depends_on:
+      #      - broker
+      - zipkin
+      - discovery-server
+      - api-gateway
+      - user-service
+
+
+  post-service:
+    container_name: post-service
+    image: post-service:new
+    depends_on:
+      #      - broker
+      - zipkin
+      - discovery-server
+      - api-gateway
+
+
+  chat-service:
+    container_name: chat-service
+    image: chat-service:new
+    ports:
+      - "8097:8097"
+    expose:
+      - "8097"
+    depends_on:
+      - zipkin
+      - discovery-server
+      - api-gateway
+
+
+
+  user-service:
+    container_name: user-service
+    image: user-service:new
+    ports:
+      - "8090:8090"
+    expose:
+      - "8090"
+    #    environment:
+    #      - SPRING_PROFILES_ACTIVE=docker
+    #      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-inventory:5432/inventory-service
+    depends_on:
+      - discovery-server
+      - api-gateway
+
+
+
+  #  notification-service:
+  #    container_name: notification-service
+  #    image: aomope/notification-service:latest
+  #    environment:
+  #      - SPRING_PROFILES_ACTIVE=docker
+  #    depends_on:
+  #      - zipkin
+  ##      - broker
+  #      - discovery-server
+  #      - api-gateway
+
+
+  search-service:
+    image: search-service:new
+    container_name: search-service
+    depends_on:
+      - zipkin
+      - discovery-server
+      - api-gateway
+      - user-service
+      - group-service
+
+
+  event-service:
+    container_name: event-service
+    image: event-service:new
+    depends_on:
+      - discovery-server
+      - api-gateway
+      - user-service
+
+
+

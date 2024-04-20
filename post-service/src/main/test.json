@@ -1,0 +1,73 @@
+{
+  "name": "Contract of Employment",
+  "industry": "Healthcare",
+  "type": "EMPLOYMENT_CONTRACT",
+  "placeholders": {
+    "Contract": {
+      "date": ""
+    },
+    "Employee": {
+      "name": "",
+      "address": "",
+      "startDate": "",
+      "continuousEmployment": ""
+    },
+    "Employer": {
+      "name": "Brooks Health and Care Limited",
+      "address": "8 Juniper Walk, Kempston, Bedford, MK42 7SX"
+    },
+    "Employment": {
+      "jobTitle": "Support Worker",
+      "workHours": "40",
+      "excessWorkHours": "40",
+      "excessBreakMinutes": "30"
+    },
+    "Salary": {
+      "hourlyRate": "£11.44",
+      "sleepIn": "£50.00"
+    }
+  },
+  "description": "This Contract of Employment outlines the terms and conditions between %%Employer.name$$ and an employee, covering job details, probation period, employment checks, work location, salary, benefits, work hours, holiday entitlement, sickness absence, other leave types, disciplinary procedures, notice periods, and deductions.",
+  "data": {
+    "name": "Contract of Employment",
+    "sections": {
+      "sectionA": {
+        "title": "",
+        "body": "This statement dated %%Contract.date%% meets the Employment Rights Act 1996 requirements. It is the Statement of Initial Employment Particulars relating to the Contract of Employment of the person named below and supersedes any previous such statements or contracts.<br><b>Name of Employee:</b>%%Employee.name%%<br><b>Address of Employee:</b>Employee.address</br><br><b>Employer:</b>%%Employer.name%%<br><b>Address:</b>%%Employer.address%%<br><br><b>Start Date:</b>%%Employee.startDate%%<br><b>Continuous Employment:</b>%%Employee.continuousEmployment%%"
+      },
+      "sectionC": {
+        "title": "Job Title",
+        "body": "The Employee is employed in the capacity of a/an %%Employment.jobTitle%%. The Employee agrees to perform the duties and responsibilities as outlined in the job description provided by the Employer and any other duties reasonably assigned to the Employee.<br>Your job description may be amended by us and, in addition to duties set out in the job description, you may be required to undertake additional or other reasonable duties as necessary to meet the needs of our business."
+      },
+      "SectionD": {
+        "title": "Probationary Period",
+        "body": "You are subject to a 6 months probationary period from the date your employment commences. We reserve the right to extend your probationary period or terminate your contract (during the probation period) if required.<br>During this probationary period, either party may give 1 week notice.<br>Probation will only to be deemed to be satisfactorily completed when a signed probation report is provided by your Line Manager and received by the HR Team. You will be informed in writing when you have successfully completed the probation period.<br>During and/or at the end of your probationary period, you may be asked to attend employment reviews to discuss your overall work performance and conduct. This may include consideration of your absence record, competency, timekeeping, attitude, and interactions with colleagues and clients. Your continuing employment will be confirmed if the Company is satisfied with your overall work performance and conduct, including gaining the Care Certificate.<br>If the Company is unsatisfied with your overall performance and conduct, or you have failed to gain the Care Certificate, your employment will be terminated with the required notice period of a week’s notice."
+      },
+      "sectionE": {
+        "title": "Employment Checks",
+        "body": "You must notify the Company as soon as you become aware of any changes to your personal circumstances that may affect your right to work in the UK. The Company reserves the right to conduct periodic checks and/or request documentation in relation to your right to work in the UK as appropriate at any time.<br>As part of your employment, you are required to undergo a Disclosure and Barring Service (DBS) check. The Company will provide you with the necessary information to apply for a DBS check. You are required to apply for a DBS check within 7 days of your employment start date. The cost of the DBS check will be met by the Company. You are required to provide the Company with the original DBS certificate within 14 days of receipt.<br>Your employment is conditional upon a satisfactory DBS check, and you are expected to cooperate with us in obtaining this. Failure to do so will result in the termination of your employment.<br>The Company will fund the cost of your first DBS check. It is your responsibility to register your DBS on the DBS Updated service. https://secure.crbonline.gov.uk/crsc/subscriber .A more detailed explanation is contained in the Employee Handbook."
+      },
+      "sectionF": {
+        "title": "Place of work",
+        "body": "You will be based in the field and will be required to work at various locations as directed by the Company to meet the needs of the business.<br>You will not be required to work outside the UK."
+      },
+      "sectionG": {
+        "title": "Pay Arrangements",
+        "body": "Your hourly rate of pay is £%%Salary.hourlyRate%%.<br>Payment is made monthly directly into your bank/building society on the last working day of the month.<br>The Company expects to be notified immediately if a mistake is made in paying any monies due. The error will normally be corrected at the next available opportunity."
+      },
+      "sectionH": {
+        "title": "Contractual Payments and Benefits",
+        "body": "You are entitled to the following payments and benefits:<br><u>Sleep-in Payment</u><br>You may be required to sleep in as part of your duties, in which case a payment for each overnight sleep-in will be made at the rate of £%%Salary.sleepIn%% per night."
+      },
+      "sectionI": {
+        "title": "Non-Contractual Payments and Benefits",
+        "body": "You are provided with the following payments and benefits, but these are provided at the Company's absolute discretion and do not form part of your contractual benefits. They can be amended or withdrawn by the Company without notice at any time:<br><u>Bonus Payments</u><br>Bonus payments are non-guaranteed and are subject to the Company's performance."
+      },
+      "sectionJ": {
+        "title": "Hours of Work",
+        "body": "The Company‘s business hours are %%Employment.workHours%%, from Monday to Sunday.<br>Your work hours are variable each week as rostered to meet the Company's operational requirements and will be worked on any of the above days. We are unable to guarantee %%Employment.workHours%% hours weekly as this is based on the shifts available.<br>Where your working day exceeds %%Employment.excessWorkHours%% hours, you will be entitled to an unpaid break of %%Employment.excessBreakMinutes%% minutes. You are not normally permitted to work in excess of %%Employment.workHours%% hours in any week and eight hours each day."
+      }
+    }
+  }
+}
+

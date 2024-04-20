@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contract</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Hello, <strong th:text="${recipientName}"></strong></h1>
+    <h1>Welcome to EduVerse</h1>
+    <p>
+        An account has been created for you by <strong th:text="${universityName}"></strong> on the EduVerse platform.
+        Please sign in using the password below to login into your account.
+    </p>
+    <p>
+        Password: <strong th:text=" ${password}"></strong>
+    </p>
+    <p>
+        <a class="button" th:href="${signinLink}">Sign In</a>
+    </p>
+    <p>
+        if you believe this email was sent to you by mistake, please ignore it.
+    </p>
+    <p>
+        <a class="button" th:href="${unsubscribeLink}">Unsubscribe</a>
+    </p>
+</div>
+</body>
+</html>
