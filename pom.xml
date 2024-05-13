@@ -118,7 +118,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <to>
-                        <image>${project.artifactId}:new</image>
+                        <image>gcr.io/numeric-analogy-407304/eduverse/${project.artifactId}:latest</image>
                     </to>
                 </configuration>
             </plugin>

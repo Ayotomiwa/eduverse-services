@@ -43,6 +43,13 @@ public class GroupEventController {
 
     @GetMapping("{groupId}/events")
     public ResponseEntity<?> getEventsByGroup(@PathVariable("groupId") String groupId) {
+
+        Object group = restTemplate.getForObject("http://GROUP-SERVICE/api/group-service/groups/" + groupId, Object.class);
+        System.out.println("Group exist: " + group);
+        if (group == null) {
+            return ResponseEntity.badRequest().body("Group does not exist");
+        }
+
         List<GroupEvent> events = eventService.getEventsByGroup(groupId);
         if (events.isEmpty()) {
             return ResponseEntity.badRequest().body("No events found for this group");

@@ -16,19 +16,19 @@ public class JwtUtil {
     private final SecretKey jwtSecretKey;
 
 
-    public JwtUtil(@Value("${jwt.secret}") String jwtSecret) {
-        this.jwtSecretKey = new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
+    public JwtUtil(@Value("${JWT_SECRET}") String jwtSecret) {
+        this.jwtSecretKey = new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8),
+                SignatureAlgorithm.HS512.getJcaName());
     }
-
-    public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(jwtSecretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject();
-    }
+//    public String getUsernameFromToken(String token) {
+//        Claims claims = Jwts.parserBuilder()
+//                .setSigningKey(jwtSecretKey)
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody();
+//
+//        return claims.getSubject();
+//    }
 
     public boolean validateToken(String authToken) {
         try {

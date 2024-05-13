@@ -28,17 +28,21 @@ public class University {
     private String secondaryTheme;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Department> departments;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppUser> users;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "university",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UniversityFeature> universityFeatures;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Module> modules;
 
 

@@ -86,7 +86,7 @@ public class UniversityController {
             return ResponseEntity.badRequest().body("University does not exist");
         }
         universityService.saveTheme(universityId, primaryTheme, secondaryTheme);
-        return ResponseEntity.ok("Theme savedssss");
+        return ResponseEntity.ok("Theme changed to " + primaryTheme + " & " + secondaryTheme);
     }
 
 

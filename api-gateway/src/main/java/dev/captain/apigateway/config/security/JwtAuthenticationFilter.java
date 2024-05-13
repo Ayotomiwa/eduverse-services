@@ -25,32 +25,25 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             System.out.println("Filtering");
             ServerHttpRequest request = exchange.getRequest();
             if (routeValidator.isSecured.test(request)) {
-                System.out.println("Secured");
                 if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
                 String token = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
                 if (!token.startsWith("Bearer ")) {
-
-                    System.out.println("Token: " + token);
                     throw new IllegalArgumentException("Header must start with Bearer");
                 }
                 try {
                     String jwt = token.substring(7);
                     boolean isValid = this.jwtUtil.validateToken(jwt);
                     if (!isValid) {
-                        System.out.println("JWT Token: " + jwt);
                         throw new IllegalArgumentException("Token is not valid");
                     }
                 } catch (Exception e) {
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
-
-                System.out.println("Nothing Happened");
             }
-            System.out.println("Not Secured");
             return chain.filter(exchange);
         };
     }

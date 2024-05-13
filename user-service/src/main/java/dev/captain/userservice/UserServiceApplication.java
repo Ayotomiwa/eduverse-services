@@ -50,20 +50,19 @@ public class UserServiceApplication {
                                     UniversityFeatureRepo universityFeatureRepo
 
     ) {
-
         return (args) -> {
-            createFeatures(featureRepo, universityFeatureRepo);
-            createUsers(featureRepo, universityRepo, profileInfoRepo,
-                    userRepo,
-                    departmentRepo,
-                    courseRepo,
-                    studentRepo,
-                    staffRepo,
-                    bCryptPasswordEncoder,
-                    universityFeatureRepo
-
-
-            );
+//            createFeatures(featureRepo, universityFeatureRepo);
+//            createUsers(featureRepo, universityRepo, profileInfoRepo,
+//                    userRepo,
+//                    departmentRepo,
+//                    courseRepo,
+//                    studentRepo,
+//                    staffRepo,
+//                    bCryptPasswordEncoder,
+//                    universityFeatureRepo
+//
+//
+//            );
             createAdminUser(adminRepo);
 
         };
@@ -71,7 +70,8 @@ public class UserServiceApplication {
 
 
     @Bean
-    public AuthenticationManager authenticationManager(CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public AuthenticationManager authenticationManager(CustomUserDetailsService userDetailsService,
+                                                       PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);

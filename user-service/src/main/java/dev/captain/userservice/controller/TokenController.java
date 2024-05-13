@@ -34,9 +34,7 @@ public class TokenController {
 
     @PostMapping("")
     public ResponseEntity<?> authenticate(@Valid @RequestBody LoginRequest loginRequest) {
-
         String userEmail = loginRequest.getUsername();
-
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -44,20 +42,17 @@ public class TokenController {
                             loginRequest.getPassword()
                     )
             );
-
-            System.out.println("Authentication: " + authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtTokenProvider.generateToken(authentication);
-            System.out.println("JWT: " + jwt);
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            System.out.println("UserDetails: " + userDetails.getUsername() + " " + userDetails.getPassword());
 
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            System.out.println("UserDetails: " + userDetails.getUsername()
+                    + " " + userDetails.getPassword());
             Optional<AppUser> user = userRepo.findByEmail(userEmail);
 
             if (user.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
             }
-
 
             return ResponseEntity.ok(new LoginResponse(jwt, user.get()));
         } catch (BadCredentialsException e) {

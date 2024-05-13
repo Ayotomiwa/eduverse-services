@@ -1,5 +1,6 @@
 package dev.captain.userservice.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,9 +18,8 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/user-service/authenticate").permitAll()
                         .anyRequest().permitAll()
                 )
                 .build();
     }
-}
+    }

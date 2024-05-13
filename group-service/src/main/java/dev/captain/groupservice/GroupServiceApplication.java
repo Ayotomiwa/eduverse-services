@@ -43,10 +43,10 @@ public class GroupServiceApplication {
 
     ) {
         return (args) -> {
-            mongoTemplate.dropCollection("userGroup");
-            mongoTemplate.dropCollection("group");
-            mongoTemplate.dropCollection("discussion");
-            mongoTemplate.dropCollection("comment");
+//            mongoTemplate.dropCollection("userGroup");
+//            mongoTemplate.dropCollection("group");
+//            mongoTemplate.dropCollection("discussion");
+//            mongoTemplate.dropCollection("comment");
 
 
             GROUP_TYPE[] groupTypes = GROUP_TYPE.values();

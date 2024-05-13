@@ -19,17 +19,15 @@ public class JwtTokenProvider {
     private final SecretKey jwtSecretKey;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String jwtSecret) {
-        this.jwtSecretKey = new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS512.getJcaName());
+        this.jwtSecretKey = new SecretKeySpec(jwtSecret.getBytes(StandardCharsets.UTF_8),
+                SignatureAlgorithm.HS512.getJcaName());
     }
-
 
     public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Date now = new Date();
-        long jwtExpiration = 86400000;
+        long jwtExpiration = 10_800_000;
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
-
-//            System.out.println("jwtSecret: " + jwtSecretKey);
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())

@@ -21,7 +21,7 @@ services:
 
   ## Eureka Server
   discovery-server:
-    image: discovery-server:new
+    image: discovery-server:latest
     container_name: discovery-server
     ports:
       - "8761:8761"
@@ -31,7 +31,7 @@ services:
       - zipkin
 
   api-gateway:
-    image: api-gateway:new
+    image: api-gateway:latest
     container_name: api-gateway
     ports:
       - "8222:8222"
@@ -46,7 +46,7 @@ services:
 
   group-service:
     container_name: group-service
-    image: group-service:new
+    image: group-service:latest
     depends_on:
       #      - broker
       - zipkin
@@ -57,7 +57,7 @@ services:
 
   post-service:
     container_name: post-service
-    image: post-service:new
+    image: post-service:latest
     depends_on:
       #      - broker
       - zipkin
@@ -67,7 +67,7 @@ services:
 
   chat-service:
     container_name: chat-service
-    image: chat-service:new
+    image: chat-service:latest
     ports:
       - "8097:8097"
     expose:
@@ -81,7 +81,7 @@ services:
 
   user-service:
     container_name: user-service
-    image: user-service:new
+    image: user-service:latest
     ports:
       - "8090:8090"
     expose:
@@ -108,7 +108,7 @@ services:
 
 
   search-service:
-    image: search-service:new
+    image: search-service:latest
     container_name: search-service
     depends_on:
       - zipkin
@@ -120,7 +120,7 @@ services:
 
   event-service:
     container_name: event-service
-    image: event-service:new
+    image: event-service:latest
     depends_on:
       - discovery-server
       - api-gateway

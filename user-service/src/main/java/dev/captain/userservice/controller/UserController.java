@@ -34,6 +34,19 @@ public class UserController {
     private final AppAdminRepo appAdminRepo;
 
 
+    @GetMapping("users/{user-id}")
+    ResponseEntity<?> getUser(@PathVariable("user-id") Long userId) {
+        if (!userService.existsUserById(userId)) {
+            return ResponseEntity.badRequest().body("User does not exist");
+        }
+
+        AppUser user = userService.retrieveUser(userId);
+        return ResponseEntity.ok(user);
+    }
+
+
+
+
     @PostMapping("university/{university-id}/admin/{admin-user-id}/users/muiltiple")
     ResponseEntity<?> createUsers(@RequestBody List<AppUserDTO> users,
                                   @PathVariable("university-id") Long universityId,
@@ -181,15 +194,7 @@ public class UserController {
         return ResponseEntity.ok("User updated");
     }
 
-    @GetMapping("users/{user-id}")
-    ResponseEntity<?> getUser(@PathVariable("user-id") Long userId) {
-        if (!userService.existsUserById(userId)) {
-            return ResponseEntity.badRequest().body("User does not exist");
-        }
 
-        AppUser user = userService.retrieveUser(userId);
-        return ResponseEntity.ok(user);
-    }
 
     @GetMapping("/faculty/{faculty-id}")
     ResponseEntity<?> getFaculty(@PathVariable("faculty-id") Long facultyId) {

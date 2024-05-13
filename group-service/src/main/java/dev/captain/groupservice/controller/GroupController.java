@@ -107,7 +107,8 @@ public class GroupController {
     public ResponseEntity<?> getGroupById(@PathVariable("groupId") String groupId) {
         Group group = groupService.getGroupById(groupId);
         if (group == null) {
-            return ResponseEntity.badRequest().body("Group not found");
+//            return ResponseEntity.badRequest().body("Group not found");
+            return null;
         }
         return ResponseEntity.ok(group);
     }

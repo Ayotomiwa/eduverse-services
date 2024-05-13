@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,9 @@ public class PostController {
                                             @RequestParam Optional<Long> size,
                                             @PathVariable("user-id") Long userId) {
 
+        if(userId == null){
+            return ResponseEntity.badRequest().body("userId cannot be mull");
+        }
 
         List <User> following = null;
 
@@ -85,12 +89,14 @@ public class PostController {
             System.out.println("Error in getting following");
         }
 
-        if(following == null || following.isEmpty()) {
-            return ResponseEntity.badRequest().body("No following found");
+        if(following == null) {
+            following = new ArrayList<>();
         }
 
-        List<Long> followingIds = following.stream().map(User::getId).toList();
+        List<Long> followingIds = new ArrayList<>(following.stream().map(User::getId).toList());
         System.out.println(followingIds);
+
+        followingIds.add(userId);
 
         Page<Post> posts = postService.getFollowingPosts(PageRequest.of(page.orElse(0), size.orElse(20L).intValue(),
                 Sort.Direction.DESC, sortBy.orElse("createdAt")), followingIds);
