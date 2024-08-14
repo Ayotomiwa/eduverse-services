@@ -6,18 +6,23 @@ import dev.captain.groupservice.model.GroupMember;
 import dev.captain.groupservice.model.UserGroup;
 import dev.captain.groupservice.service.GroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
-@RequestMapping("api/group-service/")
+@RequestMapping("/api/group-service/")
 @RequiredArgsConstructor
 public class GroupController {
 
     private final GroupService groupService;
+    private final RestTemplate restTemplate;
 
 
     @GetMapping("university/{universityId}/groups")
@@ -126,5 +131,32 @@ public class GroupController {
         List<Group> groups = groupService.searchGroups(query, universityId, userId);
         return ResponseEntity.ok(groups);
     }
+
+    @PostMapping("groups/delete")
+    public ResponseEntity<?> deleteModule(@RequestBody List<String> groupIds, @RequestParam("user-id") Long userId) {
+        if (groupIds == null || groupIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("Module name cannot be null or empty");
+        }
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("User id cannot be null");
+        }
+
+
+//        String authority = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/authority?user-id=" + userId,
+                String authority = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/users/" + userId +  "/authority",
+                HttpMethod.GET, null, String.class, new ParameterizedTypeReference<String>(){
+                }).getBody();
+
+
+        if (!Objects.equals(authority, "ADMIN")) {
+            return ResponseEntity.badRequest().body("User does not authorized to perform this operation");
+        }
+
+        groupService.deleteGroup(groupIds);
+        return ResponseEntity.ok("Groups deleted successfully");
+    }
+
+
+
 
 }

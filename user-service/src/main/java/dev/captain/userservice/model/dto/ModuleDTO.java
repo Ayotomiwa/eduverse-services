@@ -13,6 +13,7 @@ public class ModuleDTO {
     private Long id;
     private String name;
     private String description;
+    private String profileUrl;
     private String code;
     private String about;
     private Set<AppUserDTO> teachingTeam;

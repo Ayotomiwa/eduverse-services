@@ -27,10 +27,11 @@ public class ModuleService {
         return moduleRepo.findByUniversityId(universityId);
     }
 
+
     public Module createModule(Module module, Long universityId) {
         University university = universityRepo.findById(universityId).get();
         module.setUniversity(university);
-        if (module.getCourse().getId() != null) {
+        if (module.getCourse() != null && module.getCourse().getId() != null) {
             Course course = courseRepo.findById(module.getCourse().getId()).orElse(null);
             module.setCourse(course);
         }
@@ -104,6 +105,20 @@ public class ModuleService {
     }
 
     public List<Module> searchModule(Long universityId, String query) {
-        return moduleRepo.findByUniversityIdAndNameIgnoreCaseLike(universityId, query);
+        query = "%" + query + "%";
+        System.out.println("Query: " + query);
+        return moduleRepo.findByUniversityIdAndNameOrCode(universityId, query, query);
+    }
+
+
+    public boolean deleteModule(List<Long> moduleIds) {
+        try {
+            for (Long moduleId : moduleIds) {
+                moduleRepo.deleteById(moduleId);
+            }
+        } catch (Exception ignored) {
+
+         }
+        return true;
     }
 }

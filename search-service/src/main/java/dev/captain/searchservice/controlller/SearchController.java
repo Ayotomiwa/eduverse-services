@@ -44,17 +44,17 @@ public class SearchController {
         List<Object> modules = null;
 
         try {
-        users = restTemplate.exchange("http://USER-SERVICE/api/user-service/users/search?query=" + query +
+        users = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/users/search?query=" + query +
                         additionalParameters,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
                 }).getBody();
 
-        groups = restTemplate.exchange("http://GROUP-SERVICE/api/group-service/groups/search?query=" + query +
+        groups = restTemplate.exchange("https://group-service-dgrsoybfsa-ew.a.run.app/api/group-service/groups/search?query=" + query +
                         additionalParameters,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
                 }).getBody();
 
-        modules = restTemplate.exchange("http://USER-SERVICE/api/user-service/modules/search?query=" + query +
+        modules = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/modules/search?query=" + query +
                         additionalParameters,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
                 }).getBody();

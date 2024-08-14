@@ -32,7 +32,7 @@ public class EventController {
     public ResponseEntity<?> getEvents(@PathVariable String userId) {
 
         try {
-            restTemplate.getForObject("http://USER-SERVICE/api/user-service/users/" + userId, Object.class);
+            restTemplate.getForObject("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/users/" + userId, Object.class);
         } catch (HttpClientErrorException.NotFound e) {
             return ResponseEntity.badRequest().body("User does not exist");
         } catch (RestClientException ignored) {
@@ -45,11 +45,11 @@ public class EventController {
         List<Module> modules = null;
 
         try {
-            groups = restTemplate.exchange("http://GROUP-SERVICE/api/group-service/users/" + userId +
+            groups = restTemplate.exchange("https://group-service-dgrsoybfsa-ew.a.run.app/api/group-service/users/" + userId +
                     "/groups", HttpMethod.GET, null, new ParameterizedTypeReference<List<Group>>() {
             }).getBody();
             System.out.println("Groups: " + groups);
-            modules = restTemplate.exchange("http://USER-SERVICE/api/user-service/users/" +
+            modules = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/users/" +
                     userId + "/modules", HttpMethod.GET, null, new ParameterizedTypeReference<List<Module>>() {
             }).getBody();
 

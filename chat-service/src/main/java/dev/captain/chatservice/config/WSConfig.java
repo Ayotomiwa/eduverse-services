@@ -13,7 +13,7 @@ public class WSConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/api/chat-service/ws")
-                .setAllowedOrigins("http://localhost:5173, https://eduverse-4hic.vercel.app/")
+                .setAllowedOrigins("http://localhost:5173, https://eduverse-4hic.vercel.app")
                 .withSockJS();
     }
 

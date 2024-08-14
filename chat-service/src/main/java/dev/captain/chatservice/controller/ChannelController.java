@@ -30,7 +30,7 @@ public class ChannelController {
                                            @RequestBody Channel channel,
                                            @RequestParam Long userId) {
         ResponseEntity<String> access = restTemplate.exchange(
-                "http://USER-SERVICE/api/user-service/modules/" + moduleId + "/authorized?userId=" + userId,
+                "https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/modules/" + moduleId + "/authorized?userId=" + userId,
                 HttpMethod.GET,
                 null,
                 String.class

@@ -31,7 +31,7 @@ public class GroupEventController {
             return ResponseEntity.badRequest().body("Please provide the event date & time");
         }
 
-        Object group = restTemplate.getForObject("http://GROUP-SERVICE/api/group-service/groups/" + newGroupEvent.getGroupId(), Object.class);
+        Object group = restTemplate.getForObject("https://group-service-dgrsoybfsa-ew.a.run.app/api/group-service/groups/" + newGroupEvent.getGroupId(), Object.class);
         System.out.println("Group exist: " + group);
         if (group == null) {
             return ResponseEntity.badRequest().body("Group does not exist");
@@ -44,7 +44,7 @@ public class GroupEventController {
     @GetMapping("{groupId}/events")
     public ResponseEntity<?> getEventsByGroup(@PathVariable("groupId") String groupId) {
 
-        Object group = restTemplate.getForObject("http://GROUP-SERVICE/api/group-service/groups/" + groupId, Object.class);
+        Object group = restTemplate.getForObject("https://group-service-dgrsoybfsa-ew.a.run.app/api/group-service/groups/" + groupId, Object.class);
         System.out.println("Group exist: " + group);
         if (group == null) {
             return ResponseEntity.badRequest().body("Group does not exist");

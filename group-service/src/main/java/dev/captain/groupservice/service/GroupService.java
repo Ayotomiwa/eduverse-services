@@ -64,7 +64,6 @@ public class GroupService {
         userGroup.setUsername(savedGroup.getCreatorUsername());
         userGroup.setGroupId(savedGroup.getId());
 
-        userGroup.setAccepted(isAdmin(savedGroup.getCreatorId()));
 
         userGroup.setJoinedDate(LocalDateTime.now());
         userGroup.setRole(MEMBERSHIP.MODERATOR);
@@ -79,7 +78,7 @@ public class GroupService {
         String role = "";
 
         try {
-            role = restTemplate.exchange("http://USER-SERVICE/api/user-service/users/" + userId + "/authority", HttpMethod.GET, null, String.class).getBody();
+            role = restTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/users/" + userId + "/authority", HttpMethod.GET, null, String.class).getBody();
         } catch (Exception ignored) {
 
         }
@@ -138,5 +137,15 @@ public class GroupService {
         }
         userGroupRepo.deleteByGroupIdAndUserId(groupId, userId);
         return true;
+    }
+
+    public void deleteGroup(List<String> moduleIds) {
+        try {
+            for (String moduleId : moduleIds) {
+                groupRepo.deleteById(moduleId);
+            }
+        } catch (Exception ignored) {
+
+        }
     }
 }

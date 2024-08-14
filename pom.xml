@@ -19,6 +19,7 @@
         <module>event-service</module>
         <module>search-service</module>
         <module>chat-service</module>
+        <module>notification-service</module>
     </modules>
 
 
@@ -120,6 +121,11 @@
                     <to>
                         <image>gcr.io/numeric-analogy-407304/eduverse/${project.artifactId}:latest</image>
                     </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=gcp</jvmFlag>
+                        </jvmFlags>
+                    </container>
                 </configuration>
             </plugin>
             <!--            <plugin>-->

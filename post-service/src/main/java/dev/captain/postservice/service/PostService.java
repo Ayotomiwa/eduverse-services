@@ -68,4 +68,8 @@ public class PostService {
     public Page<Post> getPostsByUserIdWithoutFaculty(PageRequest p, Long userId) {
         return postRepo.findAllByUserIdAndFacultyIdIsNull(p, userId);
     }
+
+    public void deletePost(String postId) {
+        postRepo.deleteById(postId);
+    }
 }

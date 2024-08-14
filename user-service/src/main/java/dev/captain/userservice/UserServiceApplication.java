@@ -19,15 +19,14 @@ import java.util.*;
 @SpringBootApplication
 public class UserServiceApplication {
         public static void main(String[] args) {
-            Dotenv dotenv = Dotenv.configure()
-                    .filename(".env.dev")
-                    .load();
-
-            System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
-            System.setProperty("DATABASE_URL", dotenv.get("DATABASE_URL"));
-            System.setProperty("DATABASE_USER", dotenv.get("DATABASE_USER"));
-            System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
-
+//            Dotenv dotenv = Dotenv.configure()
+//                    .filename(".env.dev")
+//                    .load();
+//
+//            System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
+//            System.setProperty("DATABASE_URL", dotenv.get("DATABASE_URL"));
+//            System.setProperty("DATABASE_USER", dotenv.get("DATABASE_USER"));
+//            System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
 
             SpringApplication.run(UserServiceApplication.class, args);
         }

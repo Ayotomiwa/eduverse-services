@@ -82,7 +82,7 @@ public class PostController {
         List <User> following = null;
 
         try {
-            following = RestTemplate.exchange("http://USER-SERVICE/api/user-service/relationship/following?userId=" +
+            following = RestTemplate.exchange("https://user-service-dgrsoybfsa-ew.a.run.app/api/user-service/relationship/following?userId=" +
                     userId, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
             }).getBody();
         } catch (Exception ignored) {
@@ -131,6 +131,18 @@ public class PostController {
         }
 
         return ResponseEntity.ok(posts);
+    }
+
+    @PostMapping("posts/{postId}/delete")
+    public ResponseEntity<?> deletePost(@PathVariable("postId") String postId, @RequestParam("user-id") Long userId){
+        if (!postService.postExists(postId)) {
+            return ResponseEntity.badRequest().body("Post does not exist");
+        }
+        if (!postService.getPost(postId).getUserId().equals(userId)) {
+            return ResponseEntity.badRequest().body("You are not authorized to delete this post");
+        }
+        postService.deletePost(postId);
+        return ResponseEntity.ok("Post deleted");
     }
 
 

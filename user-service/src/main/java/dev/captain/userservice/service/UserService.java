@@ -1,5 +1,6 @@
 package dev.captain.userservice.service;
 
+import com.mailjet.client.errors.MailjetException;
 import dev.captain.userservice.model.dto.AppUserDTO;
 import dev.captain.userservice.model.dto.ProfileDTO;
 import dev.captain.userservice.model.dto.StudentDTO;
@@ -14,12 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+
 
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,7 @@ public class UserService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final DepartmentRepo departmentRepo;
     private final MailService mailService;
+    private final StaffRepo staffRepo;
 
 
     public String saveUsers(List<AppUserDTO> userDTOS, Long universityId) {
@@ -100,6 +105,7 @@ public class UserService {
         appUser.setFirstName(userDto.getFirstName());
         appUser.setLastName(userDto.getLastName());
         appUser.setEmail(userDto.getEmail());
+        appUser.setAuthority(userDto.getAuthority());
         appUser.setUserType(USER_TYPE.valueOf(userDto.getUserType()));
 
         if (userDto.getStaff() != null) {
@@ -230,6 +236,23 @@ public class UserService {
 //                throw new RuntimeException(e);
 //            }
         if (appUser.getPassword() == null || appUser.getPassword().isEmpty()) {
+
+            String generateRandomPassword = generatePassword();
+
+
+            Context context = new Context();
+            context.setVariable("universityName", university.getName());
+            context.setVariable("recipientName", appUser.getFirstName() + " " + appUser.getLastName());
+            context.setVariable("password", generateRandomPassword);
+            context.setVariable("signinLink", "https://eduverse-4hic.vercel.app/login");
+
+            try {
+                mailService.sendEmail(appUser.getEmail(), "Account Creation", context, "Eduverse");
+            } catch (MailjetException e) {
+                throw new RuntimeException(e);
+            }
+
+
             appUser.setPassword(bCryptPasswordEncoder.encode("12345"));
         } else {
             appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
@@ -237,6 +260,20 @@ public class UserService {
 
         return userRepo.save(appUser);
     }
+
+
+    public String generatePassword(){
+
+        String generateRandomPassword = new Random().ints(48, 123)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(8)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+       return generateRandomPassword;
+    }
+
+
 
     public AppUser retrieveUser(Long userId) {
         return userRepo.findAppUserById((userId));
@@ -375,5 +412,10 @@ public class UserService {
     }
 
 
+    public List<AppUserDTO> retrieveUsers(List<Long> userIds) {
+        List<AppUser> users = staffRepo.findAllById(userIds).stream().map(staff -> staff.getUser()).toList();
+
+        return UserMapper.convertUsersToDto(users);
+    }
 }
 

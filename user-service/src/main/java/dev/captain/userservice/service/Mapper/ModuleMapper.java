@@ -23,6 +23,7 @@ public class ModuleMapper {
         moduleDTO.setDescription(module.getDescription());
         moduleDTO.setCode(module.getCode());
         moduleDTO.setAbout(module.getAbout());
+        moduleDTO.setProfileUrl(module.getProfileUrl());
         if (module.getTeachingTeam() != null) {
             Set<AppUserDTO> teachingTeam = new HashSet<>();
             for (Staff staff : module.getTeachingTeam()) {

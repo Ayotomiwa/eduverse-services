@@ -47,7 +47,7 @@ public class UserController {
 
 
 
-    @PostMapping("university/{university-id}/admin/{admin-user-id}/users/muiltiple")
+    @PostMapping("university/{university-id}/admin/{admin-user-id}/users/multiple")
     ResponseEntity<?> createUsers(@RequestBody List<AppUserDTO> users,
                                   @PathVariable("university-id") Long universityId,
                                   @PathVariable("admin-user-id") Long adminUserId,
@@ -279,6 +279,14 @@ public class UserController {
         return ResponseEntity.ok(userProfile);
     }
 
+
+    @PostMapping("users/staff")
+    ResponseEntity<?> getStaffUserAccts(@RequestBody List <Long> userIds) {
+        if (userIds == null || userIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("No user ids given");
+        }
+        return ResponseEntity.ok(userService.retrieveUsers(userIds));
+    }
 
     @PostMapping("user/{user-id}/profile")
     ResponseEntity<?> updateUserProfile(@RequestBody ProfileInfo profileInfo,

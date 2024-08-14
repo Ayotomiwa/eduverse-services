@@ -2,6 +2,7 @@ package dev.captain.userservice.repo;
 
 import dev.captain.userservice.model.tables.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 
@@ -10,4 +11,5 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
 
     Course findByDepartmentUniversityIdAndCourseCodeOrCourseName(Long universityId, String courseCode, String courseName);
 
+//    ResponseEntity<?> findByUniversityId(Long universityId);
 }

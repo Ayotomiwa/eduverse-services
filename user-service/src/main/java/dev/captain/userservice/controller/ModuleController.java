@@ -2,9 +2,10 @@ package dev.captain.userservice.controller;
 
 import dev.captain.userservice.model.enums.AUTHORITY;
 import dev.captain.userservice.model.enums.USER_TYPE;
-import dev.captain.userservice.model.tables.AppUser;
+import dev.captain.userservice.model.tables.*;
 import dev.captain.userservice.model.tables.Module;
-import dev.captain.userservice.model.tables.University;
+import dev.captain.userservice.repo.CourseRepo;
+import dev.captain.userservice.repo.DepartmentRepo;
 import dev.captain.userservice.service.ModuleService;
 import dev.captain.userservice.service.UniversityService;
 import dev.captain.userservice.service.UserService;
@@ -23,10 +24,25 @@ public class ModuleController {
     private final ModuleService moduleService;
     private final UniversityService universityService;
     private final UserService userService;
+//    private final CourseRepo courseRepo;
+//    private final DepartmentRepo departmentRepo;
 
     @GetMapping("university/{university-id}/modules")
     public ResponseEntity<?> getModules(@PathVariable("university-id") Long universityId) {
         return ResponseEntity.ok(moduleService.getModules(universityId));
+    }
+
+
+    @GetMapping("university/{university-id}/courses")
+    public ResponseEntity<?> getCourses(@PathVariable("university-id") Long universityId){
+
+//        List<Department> departments = departmentRepo.findByUniversityId(universityId);
+//        List<Course> course = departments.stream().map(department -> {
+//            return department.getCourses().stream().toList();
+//        }).reduce();
+//
+//        return courseRepo.findByUniversityId(universityId);
+        return null;
     }
 
 
@@ -40,6 +56,12 @@ public class ModuleController {
         if (access.getStatusCode().isError()) {
             return access;
         }
+
+        if (module.getProfileUrl() != null && !module.getProfileUrl().startsWith("http")) {
+            String logoUrl = "https://eduverse-v1.s3.eu-west-2.amazonaws.com/" + universityId + "/" + module.getProfileUrl();
+            module.setProfileUrl(logoUrl);
+        }
+
         return ResponseEntity.ok(moduleService.createModule(module, universityId));
     }
 
@@ -189,11 +211,27 @@ public class ModuleController {
         boolean isAdmin = user.getAuthority().equals(AUTHORITY.ADMIN);
         boolean isStaff = user.getUserType().equals(USER_TYPE.STAFF);
 
-        if (!isAdmin || !isStaff) {
-            return ResponseEntity.badRequest().body("Admin user does not have the required role");
+        if (!isAdmin && !isStaff) {
+            return ResponseEntity.badRequest().body("User does not have the required role");
         }
 
         return ResponseEntity.ok("User has access");
+    }
+
+    @PostMapping("/modules/delete")
+    public ResponseEntity<?> deleteModule(@RequestBody List<Long> moduleIds, @RequestParam("user-id") Long userId) {
+        if (moduleIds == null || moduleIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("Module name cannot be null or empty");
+        }
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("User id cannot be null");
+        }
+        if (!Objects.equals(userService.getUserAuthority(userId), "ADMIN")) {
+            return ResponseEntity.badRequest().body("User does not authorized to perform this operation");
+        }
+
+        moduleService.deleteModule(moduleIds);
+        return ResponseEntity.ok("Modules deleted successfully");
     }
 
 

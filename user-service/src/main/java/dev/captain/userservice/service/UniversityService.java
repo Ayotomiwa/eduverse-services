@@ -26,7 +26,7 @@ public class UniversityService {
     private final UserService userService;
 
     public boolean existsUniversity(String name) {
-        return universityRepo.existsUniversityByName(name);
+        return universityRepo.existsUniversityByName(name.toLowerCase());
     }
 
     public void setDefaultSettings(University university) {
